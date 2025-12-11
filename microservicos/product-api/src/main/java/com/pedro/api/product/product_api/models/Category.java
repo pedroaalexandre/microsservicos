@@ -3,7 +3,7 @@ package com.pedro.api.product.product_api.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.pedro.api.product.product_api.models.dto.CategoryDTO;
+import com.pedro.dto.CategoryDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

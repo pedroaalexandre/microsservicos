@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.pedro.api.shopping.shopping_api.models.dto.ShopDTO;
+import com.pedro.dto.ShopDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,18 +18,18 @@ import lombok.NoArgsConstructor;
 public class Shop {
     
     @Id
-    public String id;
+    private String id;
 
     @Field("user_identifier")
-    public String userIdentifier;
+    private String userIdentifier;
 
     @Field("date")
-    public LocalDateTime date;
+    private LocalDateTime date;
 
     @Field("items")
-    public List<Item> items;
+    private List<Item> items;
 
-    public Integer total;
+    private Integer total;
 
     public static Shop convertToEntity(ShopDTO shopDTO) {
         Shop shop = new Shop();

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pedro.userapi.models.dto.UserDTO;
+import com.pedro.dto.UserDTO;
 import com.pedro.userapi.services.UserService;
 
 import jakarta.validation.Valid;

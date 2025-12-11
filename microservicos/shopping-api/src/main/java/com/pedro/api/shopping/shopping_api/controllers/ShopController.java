@@ -3,8 +3,8 @@ package com.pedro.api.shopping.shopping_api.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pedro.api.shopping.shopping_api.models.dto.ShopDTO;
 import com.pedro.api.shopping.shopping_api.services.ShopService;
+import com.pedro.dto.ShopDTO;
 
 import lombok.RequiredArgsConstructor;
 

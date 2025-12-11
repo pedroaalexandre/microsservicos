@@ -3,8 +3,8 @@ package com.pedro.api.product.product_api.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pedro.api.product.product_api.models.dto.CategoryDTO;
 import com.pedro.api.product.product_api.services.CategoryService;
+import com.pedro.dto.CategoryDTO;
 
 import lombok.RequiredArgsConstructor;
 

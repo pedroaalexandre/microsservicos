@@ -7,12 +7,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.pedro.api.product.product_api.converter.DTOConverter;
 import com.pedro.api.product.product_api.models.Category;
 import com.pedro.api.product.product_api.models.Product;
-import com.pedro.api.product.product_api.models.dto.CategoryDTO;
-import com.pedro.api.product.product_api.models.dto.ProductDTO;
 import com.pedro.api.product.product_api.repositories.CategoryRepository;
 import com.pedro.api.product.product_api.repositories.ProductRepository;
+import com.pedro.dto.CategoryDTO;
+import com.pedro.dto.ProductDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,19 +27,21 @@ public class ProductService {
     public List<ProductDTO> getAll() {
         List<Product> products = productRepository.findAll();
         return products.stream()
-                        .map(ProductDTO::convertToDto)
+                        .map(DTOConverter::convert)
                         .collect(Collectors.toList());
     }
 
     public ProductDTO findById(String id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException());
-        return ProductDTO.convertToDto(product);
+        return DTOConverter.convert(product);
     }
 
     public ProductDTO save(ProductDTO productDTO) {
-        Product product = productRepository.save(Product.convertToEntity(productDTO));
+        CategoryDTO categoryDTO = new CategoryDTO(productDTO.getCategory().getId(), productDTO.getCategory().getNome());
+        Category category = Category.convertToEntity(categoryDTO);
+        Product product = productRepository.save(Product.convertToEntity(productDTO, category));
         Product findProduct = productRepository.findById(product.getId()).orElseThrow(() -> new RuntimeException());
-        return ProductDTO.convertToDto(findProduct);
+        return DTOConverter.convert(findProduct);
     }
 
     public ProductDTO edit(String id, ProductDTO productDTO) {
@@ -57,13 +60,13 @@ public class ProductService {
             product.setPreco(productDTO.getPreco());
         }
         if(productDTO.getCategory() != null && !product.getCategory().getId().equals(productDTO.getCategory().getId())) {
-            CategoryDTO categoryDTO = new CategoryDTO(productDTO.getCategory().getId(), productDTO.getCategory().getNome());
-            product.setCategory(Category.convertToEntity(categoryDTO));
+            Category category = new Category(productDTO.getCategory().getId(), productDTO.getCategory().getNome());
+            product.setCategory(category);
         }
 
         product = productRepository.save(product);
 
-        return ProductDTO.convertToDto(product);
+        return DTOConverter.convert(product);
     }
 
     public ProductDTO delete(String id) {
@@ -71,13 +74,13 @@ public class ProductService {
                                             .orElseThrow(() -> new RuntimeException());
         
         productRepository.delete(product);
-        return ProductDTO.convertToDto(product);
+        return DTOConverter.convert(product);
     }
 
     public Page<ProductDTO> getAllPage(Pageable page) {
         Page<Product> produtos = productRepository.findAll(page);
         return produtos
-            .map(ProductDTO::convertToDto);
+            .map(DTOConverter::convert);
     }
 
     public List<ProductDTO> getByCategory(String id) {
@@ -87,12 +90,12 @@ public class ProductService {
         List<Product> products = productRepository.findByCategory(category);
 
         return products.stream()
-                            .map(ProductDTO::convertToDto)
+                            .map(DTOConverter::convert)
                             .collect(Collectors.toList());
     }
 
     public ProductDTO getByProductIdentifier(String productIdentifier) {
         Product products = productRepository.findByProductIdentifier(productIdentifier);
-        return ProductDTO.convertToDto(products);
+        return DTOConverter.convert(products);
     }
 }

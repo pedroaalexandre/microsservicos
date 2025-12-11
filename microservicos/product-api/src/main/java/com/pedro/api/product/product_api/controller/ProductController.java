@@ -2,8 +2,8 @@ package com.pedro.api.product.product_api.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pedro.api.product.product_api.models.dto.ProductDTO;
 import com.pedro.api.product.product_api.services.ProductService;
+import com.pedro.dto.ProductDTO;
 
 import lombok.RequiredArgsConstructor;
 

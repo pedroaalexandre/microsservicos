@@ -7,9 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.pedro.api.product.product_api.converter.DTOConverter;
 import com.pedro.api.product.product_api.models.Category;
-import com.pedro.api.product.product_api.models.dto.CategoryDTO;
 import com.pedro.api.product.product_api.repositories.CategoryRepository;
+import com.pedro.dto.CategoryDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,13 +25,13 @@ public class CategoryService {
         List<Category> categories = categoryRepository.findAll();
 
         return categories.stream()
-                        .map(CategoryDTO::convertToDto)
+                        .map(DTOConverter::convert)
                         .collect(Collectors.toList());
     }
 
     public CategoryDTO save(CategoryDTO categoryDTO) {
         Category category = categoryRepository.save(Category.convertToEntity(categoryDTO));
-        return CategoryDTO.convertToDto(category);
+        return DTOConverter.convert(category);
     }
 
     public CategoryDTO edit(String id, CategoryDTO categoryDTO) {
@@ -40,18 +41,18 @@ public class CategoryService {
             category.setNome(categoryDTO.getNome());
         }
         category = categoryRepository.save(category);
-        return CategoryDTO.convertToDto(category);
+        return DTOConverter.convert(category);
     }
 
     public CategoryDTO delete(String id) {
         Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException());
         categoryRepository.delete(category);
-        return CategoryDTO.convertToDto(category);
+        return DTOConverter.convert(category);
     }
 
     public Page<CategoryDTO> getAllPage(Pageable page) {
         Page<Category> categories = categoryRepository.findAll(page);
-        return categories.map(CategoryDTO::convertToDto);
+        return categories.map(DTOConverter::convert);
     }
 
 }
