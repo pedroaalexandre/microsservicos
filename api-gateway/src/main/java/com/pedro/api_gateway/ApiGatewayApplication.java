@@ -12,19 +12,20 @@ public class ApiGatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ApiGatewayApplication.class, args);
 	}
-
+	
 	@Bean
-	public RouteLocator customRouteLocator (RouteLocatorBuilder builder) {
+	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
 		return builder.routes()
-			.route("/user_route", r -> r.path("/user/**")
-			.uri("http://localhost:8080/"))
+			.route("user_route", r -> r.path("/user/**")
+			.uri("http://localhost:8080"))
 
-			.route("/product_route", r -> r.path("/product/**")
-			.uri("http://localhost:8081/"))
+			.route("product_route", r -> r.path("/product/**")
+			.uri("http://localhost:8081"))
 
-			.route("/shopping_route", r -> r.path("/shopping/**")
-			.uri("http://localhost:8082/"))
+			.route("shopping_route", r -> r.path("/shopping/**")
+			.uri("http://localhost:8082"))
 
 			.build();
 	}
+
 }
